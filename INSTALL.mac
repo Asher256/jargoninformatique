@@ -1,0 +1,36 @@
+---------------------------
+COMPILATION sous MacOSX
+---------------------------
+
+=======================
+Necessaire:
+=======================
+Xcode, Quicktime SDK, Fltk >=1.1 et FLU >=2.14
+
+Decompressez et installez les deux packages (FLtk et FLU) avec le terminal :
+$ ./configure
+$ make
+$ make install
+
+=======================
+Compilation JI
+=======================
+Decompressez les sources de JargonInformatique et rendez vous dans le dossier avec le terminal
+
+Executez ces commandes :
+$ ./configure --static-all
+(Si ca ne fonctionne pas : $ export PATH=$PATH:/usr/local/bin )
+$ make
+$ make install
+
+Le dossier JargonInformatique.app est cree et contient une application Bundle Carbon compatible Mac Os X !
+
+=======================
+UTILISATION
+=======================
+Il suffit de copier l'application dans votre repertoire Applications et de la lancer :-)
+
+En effet un simple glisser-deposer de "JargonInformatique" suffit a l'installer !
+
+Bonne utilisation !
+

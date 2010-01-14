@@ -1,0 +1,5 @@
+*.o
+*.a
+/config.mak
+/Makefile
+/jargoninformatique
