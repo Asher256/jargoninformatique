@@ -3,6 +3,7 @@
 
 * **Auteur:** Asher256
 * **Site Officiel:** https://www.asher256.com/projects/jargoninformatique/
+* **GitHub:** https://github.com/Asher256/jargoninformatique
   
 **Table des matières:**
   * Comment compiler Jargon Informatique?  
