@@ -1,0 +1,318 @@
+#!/bin/sh
+
+# historique:
+#------------
+# Miguel2i: configure.sh initial
+# Superna:  ajout du support macosx (darwin)
+# Asher256:   ajout detection type d'index
+# Asher256:   changement du nom par 'configure'
+# Asher256:   changement static-flu par défaut
+# Asher256:   support var d'environnement $CC $CFLAGS
+#
+# Asher256 (le 26 Aout 2005):
+#           * Adaptation pour FreeBSD
+#           * Correction de bug dans la recherche which
+#
+# Asher256 (29 décembre 2005)
+#           * CFLAGS et LDFLAGS plus propres dans config.mak
+
+
+# yes ou no
+use_flu=no
+
+# valeurs par défaut
+version=1.3.6
+prefix=/usr
+static_fltk=no
+static_flu=yes # par defaut statique (car non repandue)
+static_gcc=no
+
+CFLAGS="$CFLAGS -Wall"
+
+#les répertoires importants
+! [ -d "obj" ] && mkdir obj
+! [ -d "obj/linux" ] && mkdir obj/linux
+! [ -d "obj/darwin" ] && mkdir obj/darwin
+! [ -d "obj/mingw" ] && mkdir obj/mingw
+
+
+print_help() 
+{
+echo "./configure [options]
+Options:
+  --help		affiche cette aide
+  --static-all		
+  --static-fltk		inclu fltk statiquement dans l'application
+  --static-gcc		
+  --prefix=PREFIX	installer dans PREFIX [/usr/local]
+
+  --debug               Activer les options pour le debogage
+  --optimiz             Activer l'optimisation lors de la compilation
+
+  fltk-config et flu-config doivent être dans votre PATH
+
+"
+exit
+}
+
+debug_enabled="no"
+optimiz_enabled="no"
+
+for i in $* 
+do
+ if test "$i" = "--help" -o "$i" = "-h"  ; then
+  print_help
+ fi
+ if test "$i" = "--static-all" ; then 
+ 	static_fltk=yes
+ 	static_flu=yes
+ 	static_gcc=yes
+ fi
+ if test "$i" = "--static-fltk" ; then
+ 	static_fltk=yes
+ fi
+ if test "$i" = "--static-gcc" ; then 
+ 	static_gcc=yes
+ fi
+ if test "$i" = "--optimiz" ; then
+	optimiz_enabled="yes"
+ fi
+ if test "$i" = "--debug" ; then
+	debug_enabled="yes"
+ fi
+ if test `echo $i | cut -d = -f 1` = "--prefix" ; then
+ 	prefix=`echo $i | cut -d = -f 2`
+ fi
+done
+
+if [ "$optimiz_enabled" = "yes" -a "$debug_enabled" = "yes" ]; then
+	echo "Vous devez choisir soit --optimiz, soit --debug."
+	exit 1
+fi
+
+# Si --debug n'a pas été déclarée, alors optimisation par défaut
+if [ "$optimiz_enabled" = "yes" ]; then
+	CFLAGS="$CFLAGS -O2 -funroll-loops -fomit-frame-pointer -pipe" 
+fi
+
+if [ "$debug_enabled" = "yes" ]; then
+	CFLAGS="$CFLAGS -g"
+fi
+
+rm -f src/config.h config.mak
+
+echo -n "Checking system ... "
+case `uname` in
+	FreeBSD)
+		system=freebsd
+		CFLAGS="$CFLAGS -DLINUX"
+		exe_ext=""
+		;;
+	Linux)
+		system=linux
+		CFLAGS="$CFLAGS -DLINUX"
+		LDFLAGS="$LDFLAGS"
+		exe_ext=""
+		;;
+	Darwin)
+		system=darwin
+		CFLAGS="$CFLAGS -DLINUX"
+		exe_ext=""
+		;;
+	CYGWIN*) 
+		system=mingw
+		CFLAGS="$CFLAGS -DWIN32"
+		exe_ext=.exe
+		;;
+	MINGW*) 
+		system=mingw
+		CFLAGS="$CFLAGS -DWIN32"
+		exe_ext=.exe
+		;;
+	*)
+		echo "Systeme inconnu"
+		exit 1
+		;;
+esac
+echo $system
+
+if [ "$system" = "linux" ]; then
+	LIBS="$LIBS -lXpm"
+fi
+
+# Test which ou type -path car which n'existe pas sous MinGw
+echo -n "Checking for which ..."
+which which 2> /dev/null > /dev/null
+if [ "$?" = "0" ]; then
+	which="which"
+else
+	type type 2>&1 > /dev/null 
+	if [ "$?" == "0" ]; then
+		which="type -path"
+	else
+		echo "Erreur : impossible de trouver which ou un equivalent"
+		exit 1
+	fi
+fi
+echo $which
+
+echo -n "Checking for c compiler ..."
+
+#teste premièrement la variable d'environnement $CC
+if [ "$CC" != "" ]; then
+	if test ! `$which $CC`; then
+		echo "ERREUR: La variable d'environnement \$CC contient $CC"
+		echo "        Ce programme n'existe pas..."
+		exit 1
+	fi
+	echo `$which $CC`
+else
+	if test ! `$which g++` ; then
+		if test ! `$which gcc` ; then
+			echo "Erreur : impossible de trouver gcc ou g++"
+			exit 1
+		else
+			CC=gcc
+		fi
+	else
+		CC=g++
+	fi
+fi
+
+echo -n "Checking for fltk-config ... "
+if test `$which fltk-config` ; then
+$which fltk-config
+FLTK_CFLAGS="\`fltk-config --cxxflags\`"
+if test "$static_fltk" = "yes" ; then
+	FLTK_LIBS="\`fltk-config --use-images --ldstaticflags\`"
+	else
+	FLTK_LIBS="\`fltk-config --use-images --ldflags\`"
+	fi
+else
+echo "Erreur : vous devez installer fltk (voir www.fltk.org) "
+exit 1
+fi
+
+echo -n "Checking for fluid ..."
+if test `$which fluid` ; then
+	use_fluid=yes
+	echo yes
+else
+	use_fluid=
+	echo no
+fi
+
+if [ "$system" != "mingw" ]; then
+	if [ "$use_flu" = "yes" ]; then
+		echo -n "Checking for flu-config ... "
+		if test `$which flu-config`; then 
+		$which flu-config
+		FLU_CFLAGS="\`flu-config --cxxflags\`"
+
+		if test "$static_flu" = "yes" ; then
+			FLU_LIBS="\`flu-config --ldstaticflags\`"
+			else
+			FLU_LIBS="\`flu-config --ldflags\`"
+			fi
+		else
+			echo "Warning : flu n'est pas installe"
+		fi
+	fi
+fi
+
+if test "$static_gcc" = "yes" ; then
+STATIC_GCC=-static-libgcc
+fi
+
+#cherche awk
+echo -n "Checking for awk ... "
+if test ! `$which awk`; then
+echo
+echo "ERREUR: awk n'est pas installe"
+exit 1
+else
+echo " `$which awk`"
+fi
+
+#teste la taille d'un int
+echo "Checking for sizeof(int), sizeof(void *)..."
+$CC misc/sizeof.c -o sizeof$exe_ext || exit 1
+void="`./sizeof$exe_ext | awk '{ print $1 }'`" 
+int="`./sizeof$exe_ext | awk '{ print $2 }'`" 
+long="`./sizeof$exe_ext | awk '{ print $3 }'`" 
+rm sizeof$exe_ext
+echo "    sizeof(void *) = $void"
+echo "    sizeof(int)    = $int"
+echo "    sizeof(long)   = $long"
+INDEX_ALLOC=0
+if [ "$void" -gt "$int" ]; then
+	if [ "$void" = "$long" ]; then
+		INDEX_TYPE="long"
+	else
+		#eh bien sinon, la bonne vieille allocation memoire
+		INDEX_TYPE="int"
+		INDEX_ALLOC=1
+	fi
+else
+	INDEX_TYPE=int
+fi
+if [ "$INDEX_ALLOC" -eq "1" ]; then
+	echo "Type d'index: Avec allocation"
+	echo
+else
+	echo "Type d'index: $INDEX_TYPE"
+	echo
+fi
+
+echo "Creating src/config.h ... "
+echo "#ifndef __CONFIGURE__H" >> src/config.h
+echo "#define __CONFIGURE__H" >> src/config.h
+systeme="`echo $system | tr [a-z] [A-Z]`"
+if [ "$system" = "freebsd" ]; then
+	systeme="LINUX"
+fi
+if [ "$system" = "darwin" ]; then
+	systeme="LINUX"
+fi
+if [ "$system" = "mingw" ]; then
+	systeme="WIN32"
+fi
+echo "#define INDEX_TYPE $INDEX_TYPE" >> src/config.h
+[ "$INDEX_ALLOC" -eq "1" ] && echo "#define INDEX_ALLOC" >> src/config.h
+echo "#ifndef $systeme" >> src/config.h
+echo "#define $systeme /* nom du system */" >> src/config.h
+echo "#endif" >> src/config.h
+echo "#define VERSION \"$version\"" >> src/config.h
+echo "#define PREFIX \"$prefix\"" >> src/config.h
+if [ "$use_flu" = "yes" ]; then
+	if test "$FLU_LIBS" ; then 
+	echo "#define USE_FLU" >> src/config.h
+	fi
+fi
+echo "#endif" >> src/config.h
+
+echo "Creating config.mak ... "
+echo "CC=$CC" >> config.mak
+echo "CPP=$CC" >> config.mak
+echo VERSION=$version >> config.mak
+echo SYSTEM=$system >> config.mak
+echo OBJ_DIR=obj/$system >> config.mak
+if test "$system" = "mingw" ; then
+echo "EXE=jargoninformatique.exe" >> config.mak
+else
+echo "EXE=jargoninformatique" >> config.mak
+fi
+if test $use_fluid ; then 
+echo HAVE_FLUID=1 >> config.mak
+fi
+echo PREFIX=$prefix >> config.mak
+echo LIBS=$STATIC_GCC $FLTK_LIBS $FLU_LIBS $LIBS >> config.mak
+echo CFLAGS=$FLTK_CFLAGS $FLU_CFLAGS $CFLAGS >> config.mak
+
+echo
+echo "The compiler is:  $CC"
+echo "The prefix is:    $prefix"
+echo "The \$CFLAGS is:  $CFLAGS"
+cp misc/Makefile .
+echo
+echo Tout est bon. Tapez maintenant: make

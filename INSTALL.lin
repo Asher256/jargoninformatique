@@ -1,0 +1,86 @@
+Compiler Jargon Informatique sous GNU/Linux
+--------------------------------------------
+NOTE: Ce texte est écrit au format UTF-8 (pour les accents)
+Si vous avez des questions concernant ce document: contact@asher256.com
+
+=============================================
+Les dépendances
+=============================================
+Pour compiler le Jargon Informatique sous Linux, vous aurez besoin de 
+deux librairies supplémentaires à X11:
+  * Fltk: C'est le toolkit utilisé par le logiciel. normalement vous devez
+          l'avoir dans votre distribution. Cherchez dans vos repository
+          (apt ou yum).
+          Si vous ne le trouvez pas (y a peu de chances... mais bon)
+          vous pouvez toujours le compiler et l'installer depuis la source.
+          Son site officiel: http://www.fltk.org/
+
+=============================================
+Commencer la compilation
+=============================================
+Une fois la librairie Fltk installées, on va pouvoir compiler 
+Jargon Informatique.
+
+Vous devez aller là ou il y a Jargon Informatique, par exemple
+si vous avez la source dans /home/asher256/JargonInformatique-1.3.6:
+
+$ cd /home/asher256/JargonInformatique-1.3.6
+
+Après vous générez le Makefile et les fichiers de configuration:
+
+$ sh configure
+
+Vous aurez quelques messages qui vont apparaître. Vous pouvez maintenant
+compiler le programme:
+
+$ make
+
+Une fois la compilation finie, vous aurez sans doutes envie de l'installer?
+Si oui alors mettez vous en root:
+
+$ su
+password:
+
+et puis installez le:
+
+$ make install
+
+=============================================
+Comment changer le chemin d'installation?
+=============================================
+Le script configure permet de personnaliser la compilation.
+Par défaut, Jargon Informatique s'installe dans /usr/local. Si
+vous souhaitez par exemple qu'il s'installe dans /usr
+vous pouvez taper:
+
+./configure --prefix=/usr
+
+=============================================
+Comment changer de compilateur?
+=============================================
+Avant de faire ./configure il faut taper:
+
+$ export CC=<votre compilateur>
+
+par exemple, si vous voulez que le compilateur soit apgcc vous
+tapez:
+
+$ export CC=apgcc
+
+et enfin, vous régénérez le Makefile avec
+
+$ ./configure
+
+=============================================
+Comment passer des cflags du compilateur?
+=============================================
+Même chose que la précédente question mais avec une
+autre variable d'environnement. 
+
+Avant de lancer ./configure vous tapez:
+
+$ export CFLAGS=<vos flags>
+
+par exemple:
+
+$ export CFLAGS=-O3

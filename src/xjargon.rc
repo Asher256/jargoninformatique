@@ -1,0 +1,13 @@
+//===================================
+// Fichier rc pour mingw
+//
+// Par Asher256 2006
+// Email: contact@asher256.com
+//===================================
+
+#include "resource.h"
+
+A ICON MOVEABLE PURE LOADONCALL DISCARDABLE "misc/win_icon.ico"
+
+IDI_ICONE ICON DISCARDABLE "misc/win_icon.ico"
+

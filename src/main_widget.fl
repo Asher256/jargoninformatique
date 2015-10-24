@@ -1,0 +1,584 @@
+# data file for the Fltk User Interface Designer (fluid)
+version 1.0107 
+header_name {.h} 
+code_name {.cpp}
+decl {\#include <FL/Fl_Double_Window.H>} {public
+} 
+
+decl {\#include <FL/Fl_Hold_Browser.H>} {public
+} 
+
+decl {\#include <FL/fl_ask.H>} {} 
+
+class myList {: {public Fl_Hold_Browser}
+} {
+  Function {myList(int x, int y, int w, int h, const char *str=0) : Fl_Hold_Browser(x,y,w,h,str)} {open
+  } {
+    code {} {}
+  }
+  Function {handle(int e)} {open return_type int
+  } {
+    code {if(e==FL_KEYBOARD /* && Fl::event_key()==FL_Escape*/ ) 
+	return 1;
+
+return Fl_Hold_Browser::handle(e);} {}
+  }
+} 
+
+class myWindow {: {public Fl_Double_Window}
+} {
+  decl {int event_enabled;} {public
+  }
+  Function {myWindow(int w, int h, const char *str=0) : Fl_Double_Window(w,h,str)} {} {
+    code {event_enabled=1;} {}
+  }
+  Function {handle(int e)} {return_type int
+  } {
+    code {if(!event_enabled) return 1;
+
+if(e==FL_KEYBOARD && Fl::event_key()==FL_Escape) 
+	return 1;
+
+return Fl_Double_Window::handle(e);} {}
+  }
+} 
+
+class NavigateurDlg {} {
+  decl {char *navigateur_par_defaut;} {public
+  }
+  decl {int ret;} {}
+  Function {NavigateurDlg()} {open
+  } {
+    Fl_Window MainWindow {
+      label {Choisir le navigateur...}
+      xywh {269 165 410 150} type Double color 156 hide modal
+    } {
+      Fl_Button ok {
+        label {&Ok}
+        callback {MainWindow->hide();
+ret=1;}
+        xywh {123 115 80 23} box ROUND_UP_BOX color 106 selection_color 106 labelfont 1 labelsize 12 labelcolor 255
+      }
+      Fl_Button cancel {
+        label {&Annuler}
+        callback {MainWindow->hide();}
+        xywh {214 115 80 23} box ROUND_UP_BOX color 106 selection_color 106 labelsize 12 labelcolor 255
+      }
+      Fl_Group box {open
+        xywh {10 15 389 90} box ENGRAVED_BOX color 156
+      } {
+        Fl_Box label {
+          label {Mettez le nom des navigateurs (séparés par des virgules):}
+          xywh {18 25 357 20} color 255 labelsize 12 align 20
+        }
+        Fl_Input nom {
+          xywh {20 58 275 24} labelsize 12 textsize 12
+        }
+      }
+      Fl_Button {} {
+        label {&Par défaut}
+        callback {if(navigateur_par_defaut) nom->value(navigateur_par_defaut);}
+        xywh {305 59 80 23} box ROUND_UP_BOX color 106 selection_color 106 labelsize 10 labelcolor 255
+      }
+    }
+    code {navigateur_par_defaut=0;} {}
+  }
+  Function {show(int x, int y)} {return_type int
+  } {
+    code {MainWindow->position(
+x,y);
+ret=0;
+MainWindow->show();
+while(MainWindow->shown()) Fl::wait();
+return ret;} {}
+  }
+  Function {~NavigateurDlg()} {open
+  } {
+    code {delete MainWindow;} {}
+  }
+} 
+
+class Credit {} {
+  Function {Credit()} {open
+  } {
+    Fl_Window MainWindow {open
+      xywh {239 215 395 130} type Double color 156 hide modal
+    } {
+      Fl_Group group {open
+        xywh {0 0 395 400}
+      } {
+        Fl_Browser view {
+          xywh {0 0 395 900} box FLAT_BOX color 156 labelfont 4 labelsize 12 textfont 4 textsize 12
+        }
+      }
+      Fl_Button {} {
+        label {&Ok}
+        callback {MainWindow->hide();}
+        xywh {150 100 95 20} box ROUND_UP_BOX color 106 selection_color 106 labelfont 1 labelsize 12 labelcolor 255
+      }
+    }
+    code {} {}
+  }
+  Function {show()} {open
+  } {
+    code {MainWindow->position(
+Fl::x() + (Fl::w()-MainWindow->w())/2,
+Fl::y() + (Fl::h()-MainWindow->h())/2
+);
+
+group->position(0,MainWindow->h());
+
+MainWindow->show();} {}
+  }
+  Function {add(const char *str)} {} {
+    code {view->add(str);} {}
+  }
+  Function {~Credit()} {} {
+    code {delete MainWindow;} {}
+  }
+} 
+
+class Interface {open
+} {
+  Function {make_main_window()} {open
+  } {
+    Fl_Window MainWindow {
+      label {Jargon Informatique}
+      xywh {255 151 720 535} type Double color 156 hide
+      class myWindow
+    } {
+      Fl_Box {} {
+        label {Jargon Informatique}
+        xywh {210 21 300 35} box ROUNDED_BOX color 106 labelsize 18 labelcolor 255
+      }
+      Fl_Input input {
+        label {Mot à trouver:}
+        xywh {22 74 177 25} box BORDER_BOX labelfont 1 labelsize 12 labelcolor 58 align 5 when 1 textsize 12
+      }
+      Fl_Button effacer_mot {
+        label x
+        tooltip {Reinitialiser la recherche dans le mot à trouver...
+Raccourci: CTRL-u} xywh {201 76 22 22} box ROUND_UP_BOX shortcut 0x40075 color 106 selection_color 106 labelfont 1 labelsize 10 labelcolor 7
+      }
+      Fl_Button precedent {
+        label {@<-}
+        tooltip {Le mot précédent...
+Raccourci: Alt+h} xywh {235 75 57 25} box ROUND_UP_BOX shortcut 0x80068 color 106 selection_color 106 labelsize 12 labelcolor 255 deactivate
+      }
+      Fl_Button suivant {
+        label {@->}
+        tooltip {Le mot suivant...
+Raccourci ALT+J} xywh {295 75 44 25} box ROUND_UP_BOX shortcut 0x8006a color 106 selection_color 106 labelsize 12 labelcolor 255 deactivate
+      }
+      Fl_Button little {
+        label F
+        tooltip {Diminuer la taille de la police...
+Raccourci: ALT+k} xywh {341 75 33 25} box ROUND_UP_BOX shortcut 0x8006b color 106 selection_color 106 labelfont 1 labelsize 11 labelcolor 255
+      }
+      Fl_Button big {
+        label F
+        tooltip {Augmenter la taille de la police...
+Raccourci: ALT+L} xywh {376 75 33 25} box ROUND_UP_BOX shortcut 0x8006c color 106 selection_color 106 labelfont 1 labelcolor 255
+      }
+      Fl_Button ouvrir_options {
+        label {&Options}
+        tooltip {Modifier certaines options du logiciel...} xywh {414 75 80 25} box ROUND_UP_BOX color 106 selection_color 106 labelsize 11 labelcolor 255
+      }
+      Fl_Button exporter_html {
+        label {&Exp}
+        tooltip {Exporter l'explication au format HTML...} xywh {496 75 35 25} box ROUND_UP_BOX color 106 selection_color 106 labelsize 10 labelcolor 255
+      }
+      Fl_Button about {
+        label {&A propos}
+        tooltip {A propos du logiciel, mises à jour, auteurs...} xywh {534 75 84 25} box ROUND_UP_BOX color 106 selection_color 106 labelsize 11 labelcolor 255
+      }
+      Fl_Button quitter {
+        label {&Quitter@>}
+        tooltip {Quitter le logiciel...} xywh {620 75 80 25} box ROUND_UP_BOX color 106 selection_color 106 labelsize 11 labelcolor 255
+      }
+      Fl_Button classement_par_theme {
+        label {&Classement par Theme...}
+        tooltip {Classer les mots selon leur appartenance à un thème...
+Par exemple le thème LINUX contiendra tous les mots relatifs à ce système...} xywh {22 488 201 25} box ROUND_UP_BOX color 106 selection_color 106 labelsize 11 labelcolor 7
+      }
+      Fl_Browser list {
+        xywh {22 112 201 369} type Hold box BORDER_BOX color 255 selection_color 135 labelfont 1 labelsize 12 labelcolor 58 align 5 when 1 textsize 12 textcolor 73
+        class myList
+      }
+      Fl_Help_View output {
+        xywh {235 112 465 401} box BORDER_BOX color 255 labelfont 1 labelsize 12 labelcolor 58 align 5
+      }
+    }
+  }
+  Function {make_about()} {open
+  } {
+    Fl_Window {} {
+      label {A propos...}
+      xywh {339 151 350 495} type Double color 156 modal visible
+    } {
+      Fl_Button fermer_about {
+        label {&Fermer...}
+        tooltip {Fermer la fenêtre...} xywh {126 462 99 22} box ROUND_UP_BOX color 106 selection_color 106 labelsize 12 labelcolor 255
+      }
+      Fl_Box petit_readme2 {
+        label {Le contenu du dictionnaire est écrit par Roland Trique et quelques contributeurs. Il est distribué sous licence GNU Free Documentation Licence version 1.1. Vous avez le droit de le distribuer, le copier et de l'améliorer. Le dictionnaire distribué avec cette version du logiciel est le 3.4.109. Le site officiel du dictionnaire est
+http://www.linux-france.org/prj/jargonf}
+        xywh {11 341 324 110} box ROUNDED_BOX color 57 labelsize 10 labelcolor 7 align 212
+      }
+      Fl_Box {} {
+        label {A propos...}
+        xywh {92 7 160 33} box RFLAT_BOX color 106 labelfont 1 labelsize 16 labelcolor 255
+      }
+      Fl_Box label_version {
+        label {Version 1.3.6 (Avril 2006)} selected
+        xywh {92 43 160 15} color 15 labelfont 1 labelsize 10 labelcolor 7
+      }
+      Fl_Box petit_readme {
+        label {Jargon Informatique est un logiciel qui vous permettra naviguer d'une manière conviviale dans un dictionnaire informatique très fourni (plus de 10000 mots!). Le dictionnaire contient tous les termes importants du Jargon Informatique. La base de donnée des mots+explication a été faite par Roland Trique (voir en bas pour la licence). Le logiciel Jargon Informatique est un logiciel libre distribué sous la licence GNU General Public Licence Version 2. Vous avez donc le droit de le distribuer et de l'utiliser gratuitement. Vous pouvez aussi de consulter et améliorer son code source. Lisez le fichier LISEZ-MOI.htm et COPYING.txt pour plus d'informations.  }
+        xywh {11 155 325 177} box BORDER_BOX color 255 labelsize 10 align 212
+      }
+      Fl_Box label_auteur {
+        label {Auteur: Asher256}
+        xywh {11 66 235 15} labelfont 5 labelsize 12 labelcolor 215 align 21
+      }
+      Fl_Box label_email {
+        label {Email:  contact@asher256.com}
+        xywh {10 86 235 15} labelfont 5 labelsize 12 labelcolor 206 align 21
+      }
+      Fl_Box label_url {
+        label {Url:    http://jargon.tuxfamily.org/}
+        xywh {11 106 235 15} labelfont 5 labelsize 12 labelcolor 175 align 21
+      }
+      Fl_Button show_news {
+        label {&News}
+        tooltip {La liste des mises à jour...} xywh {280 69 55 20} box ROUND_UP_BOX color 106 selection_color 106 labelsize 10 labelcolor 255
+      }
+      Fl_Button show_credit {
+        label {Cr&edits}
+        tooltip {Les credits...} xywh {280 95 55 21} box ROUND_UP_BOX color 106 selection_color 106 labelsize 10 labelcolor 255
+      }
+      Fl_Button show_contrib {
+        label {&Contributeurs}
+        tooltip {Liste des contributeurs...} xywh {103 128 140 20} box ROUND_UP_BOX color 106 selection_color 106 labelfont 1 labelsize 10 labelcolor 255
+      }
+    }
+  }
+  Function {make_news()} {} {
+    Fl_Window {} {open
+      xywh {224 193 545 465} type Double color 156 hide resizable modal
+    } {
+      Fl_Browser news_list {
+        xywh {15 13 515 407} labelfont 4 labelsize 12 textfont 4 textsize 12 resizable
+      }
+      Fl_Button news_ok {
+        label {&Ok}
+        xywh {237 432 70 22} box ROUND_UP_BOX color 106 selection_color 106 labelsize 12 labelcolor 255
+      }
+    }
+  }
+  Function {make_config_window()} {} {
+    Fl_Window {} {
+      label Configuration
+      xywh {343 176 330 180} type Double color 156 hide modal
+    } {
+      Fl_Button fermer_options {
+        label {&Fermer...}
+        tooltip {Fermer la fenêtre...} xywh {116 146 99 22} box ROUND_UP_BOX color 106 selection_color 106 labelsize 12 labelcolor 255
+      }
+      Fl_Box {} {
+        label Configuration
+        xywh {77 7 176 33} box ROUNDED_BOX color 106 labelfont 1 labelcolor 255
+      }
+      Fl_Button config_navigateur {
+        label {&Choisir votre navigateur Internet}
+        xywh {25 54 280 20} color 106 selection_color 106 labelsize 10 labelcolor 255
+      }
+      Fl_Button config_couleurs {
+        label {&Les couleurs de l'interface}
+        xywh {25 84 280 20} color 106 selection_color 106 labelsize 10 labelcolor 255
+      }
+      Fl_Button config_autre {
+        label {&Autres Options}
+        xywh {25 113 280 20} color 106 selection_color 106 labelsize 10 labelcolor 255
+      }
+    }
+  }
+} 
+
+class LoadingDlg {} {
+  Function {LoadingDlg()} {} {
+    Fl_Window MainWindow {
+      label {Chargement...}
+      xywh {369 256 280 110} type Single color 156 hide
+      class myWindow non_modal noborder
+    } {
+      Fl_Box {} {
+        label {Chargement du dictionnaire en cours...}
+        xywh {20 60 240 15} labelfont 2 labelsize 12
+      }
+      Fl_Progress progress {
+        label {0%}
+        xywh {20 79 240 15} box ROUNDED_BOX color 167 selection_color 175 labelsize 10
+      }
+      Fl_Box {} {
+        label {Jargon Informatique}
+        xywh {38 15 203 33} box RFLAT_BOX color 106 labelfont 1 labelcolor 255
+      }
+    }
+    code {MainWindow->event_enabled=0;} {}
+  }
+  Function {reset()} {} {
+    code {progress->value(0);
+progress->label("0%");} {}
+  }
+  Function {~LoadingDlg()} {open
+  } {
+    code {delete MainWindow;} {}
+  }
+} 
+
+class SelectionCouleur {} {
+  decl {int couleur;} {public
+  }
+  Function {SelectionCouleur()} {open
+  } {
+    Fl_Window MainWindow {
+      label {Les couleurs...}
+      xywh {365 309 235 235} type Double color 156 selection_color 156 hide modal
+    } {
+      Fl_Box label {
+        label {Vous pouvez choisir ici les couleurs de l'interface:}
+        xywh {10 14 215 40} labelsize 12 align 149
+      }
+      Fl_Button {} {
+        label {&Ok}
+        callback {MainWindow->hide();
+couleur=get_couleur_selectionnee();}
+        xywh {29 190 81 23} box ROUND_UP_BOX color 106 selection_color 106 labelsize 12 labelcolor 255
+      }
+      Fl_Button {} {
+        label {&Annuler}
+        callback {MainWindow->hide();
+couleur=-1;}
+        xywh {120 190 82 23} box ROUND_UP_BOX color 106 selection_color 106 labelsize 12 labelcolor 255
+      }
+      Fl_Round_Button couleur_verte {
+        label {&Bleu (par défaut)}
+        tooltip {Couleur Simpatique} xywh {22 59 190 25} type Radio down_box ROUND_DOWN_BOX color 156 labelsize 12
+      }
+      Fl_Round_Button couleur_rouge {
+        label {&Rouge}
+        tooltip {Couleur endiablée} xywh {22 88 190 25} type Radio down_box ROUND_DOWN_BOX color 156 labelsize 12
+      }
+      Fl_Round_Button couleur_bleu {
+        label {&Vert}
+        tooltip {Couleur Naturelle} xywh {22 120 190 25} type Radio down_box ROUND_DOWN_BOX color 156 labelsize 12
+      }
+      Fl_Round_Button couleur_jaune {
+        label {&Jaune}
+        tooltip {pour les excentriques :-)} xywh {22 152 190 25} type Radio down_box ROUND_DOWN_BOX color 156 labelsize 12
+      }
+    }
+  }
+  Function {show(int sel)} {open return_type int
+  } {
+    code {couleur_bleu->value(0); couleur_rouge->value(0);
+couleur_verte->value(0); couleur_jaune->value(0);
+
+if(sel==3) couleur_jaune->value(1);
+else if(sel==2) couleur_bleu->value(1);
+else if(sel==1) couleur_rouge->value(1);
+else couleur_verte->value(1);
+couleur=-1;
+MainWindow->show();
+while(MainWindow->shown()) { Fl::wait(); }
+return couleur;} {}
+  }
+  Function {get_couleur_selectionnee()} {open private return_type int
+  } {
+    code {if(couleur_verte->value()) return 0;
+if(couleur_rouge->value()) return 1;
+if(couleur_bleu->value())  return 2;
+if(couleur_jaune->value()) return 3;
+return -1; //si c'est une erreur, alors retouner la couleur par défaut, le vert :-)} {}
+  }
+  Function {~SelectionCouleur()} {open
+  } {
+    code {delete MainWindow;} {}
+  }
+} 
+
+class AutreOptionDlg {} {
+  decl {int ret;} {}
+  Function {AutreOptionDlg()} {open
+  } {
+    Fl_Window MainWindow {
+      label {Autres Options...} open
+      xywh {230 90 310 145} type Double color 156 hide modal
+    } {
+      Fl_Button ok {
+        label {&Ok}
+        callback {MainWindow->hide();
+ret=1;}
+        xywh {70 108 80 23} box ROUND_UP_BOX color 106 selection_color 106 labelfont 1 labelsize 12 labelcolor 255
+      }
+      Fl_Button cancel {
+        label {&Annuler}
+        callback {MainWindow->hide();}
+        xywh {161 108 80 23} box ROUND_UP_BOX color 106 selection_color 106 labelsize 12 labelcolor 255
+      }
+      Fl_Check_Button check_fenetre_centree {
+        label {&Démarrer la fenêtre centrée}
+        tooltip {Imposer au gestionnaire de fenêtre que l'interface de Jargon Informatique soit au centre de l'écran (au démarrage)...} xywh {20 10 260 25} down_box DOWN_BOX labelsize 12
+      }
+      Fl_Check_Button check_souvenir {
+        label {&Se souvenir du précédent mot}
+        tooltip {Quand le logiciel sera lancé, il va choisir le précédent mot sélectionné.} xywh {20 41 260 25} down_box DOWN_BOX labelsize 12
+      }
+      Fl_Check_Button check_hide_splash {
+        label {&Ne pas afficher le Splash Screen}
+        tooltip {Si vous cochez cette case, vous choisirez de ne pas avoir la fenêtre de chargement (avec le pourcentage) quand vous lancez le logiciel...} xywh {20 72 260 25} down_box DOWN_BOX labelsize 12
+      }
+    }
+  }
+  Function {show(int x, int y)} {return_type int
+  } {
+    code {MainWindow->position(
+x,y);
+ret=0;
+MainWindow->show();
+while(MainWindow->shown()) Fl::wait();
+return ret;} {}
+  }
+  Function {~AutreOptionDlg()} {open
+  } {
+    code {delete MainWindow;} {}
+  }
+} 
+
+class SelectionThemeMot {} {
+  decl {int ret;} {public
+  }
+  Function {SelectionThemeMot()} {open
+  } {
+    Fl_Window MainWindow {
+      label {Themes de mots} open
+      xywh {374 143 385 385} type Double color 156 selection_color 156 hide resizable modal
+    } {
+      Fl_Button {} {
+        label {&Ok}
+        callback {//teste si au moins un thème est sélectionné...
+if(list->nchecked()==0) {
+	fl_alert("Il faut au moins sélectionner un thème...");
+	return;
+}
+
+//et enfin, il fini ça :-)
+MainWindow->hide();
+ret=1;}
+        xywh {285 15 92 23} box ROUND_UP_BOX color 106 selection_color 106 labelfont 1 labelsize 12 labelcolor 255
+      }
+      Fl_Button {} {
+        label {&Annuler}
+        callback {MainWindow->hide();}
+        xywh {285 47 92 23} box ROUND_UP_BOX color 106 selection_color 106 labelfont 2 labelsize 12 labelcolor 255
+      }
+      Fl_Check_Browser list {
+        xywh {9 15 266 332} box DOWN_BOX labelsize 12 textsize 12 textcolor 72 resizable
+      }
+      Fl_Button {} {
+        label {Tout &Sel.}
+        callback {for(int i=1;i<=list->nitems();i++) list->check_all();}
+        tooltip {Selectionner tous les thèmes...} xywh {10 353 125 23} box ROUND_UP_BOX color 106 selection_color 106 labelsize 12 labelcolor 255
+      }
+      Fl_Button {} {
+        label {Tout &Desel.}
+        callback {for(int i=1;i<=list->nitems();i++) list->check_none();}
+        tooltip {Déselectionner tout les thèmes...} xywh {150 353 125 23} box ROUND_UP_BOX color 106 selection_color 106 labelsize 12 labelcolor 255
+      }
+    }
+    code {MainWindow->size_range(MainWindow->w(),MainWindow->h());} {}
+  }
+  Function {show()} {return_type int
+  } {
+    code {ret=0;
+MainWindow->show();
+while(MainWindow->shown()) {
+	Fl::wait();
+}
+return ret;} {}
+  }
+  Function {~SelectionThemeMot()} {open
+  } {
+    code {delete MainWindow;} {}
+  }
+} 
+
+class ContribWindow {} {
+  Function {ContribWindow()} {open
+  } {
+    Fl_Window MainWindow {
+      label Contributeurs
+      xywh {405 127 405 395} type Double color 156 selection_color 156 hide resizable modal
+    } {
+      Fl_Button {} {
+        label {&Fermer}
+        callback {MainWindow->hide();}
+        xywh {151 352 109 24} box ROUND_UP_BOX color 106 selection_color 106 labelsize 12 labelcolor 255
+      }
+      Fl_Box {} {
+        label Miguel2i
+        xywh {70 90 65 20} labelfont 1
+      }
+      Fl_Box {} {
+        label {Miguel2i@@free.fr}
+        xywh {15 110 180 20} labelfont 1 labelcolor 178
+      }
+      Fl_Box {} {
+        label {Bêta test, correction de plusieurs bugs. Ajout de certaines fonctions,  remarques sur le code source.}
+        xywh {15 132 180 82} labelsize 12 align 145
+      }
+      Fl_Box {} {
+        label Superna
+        xywh {260 90 65 21} labelfont 1
+      }
+      Fl_Box {} {
+        label {superna@@na-prod.com}
+        xywh {208 110 180 20} labelfont 1 labelcolor 178
+      }
+      Fl_Box {} {
+        label {Bêta test, Contribution avec le support debian i386 et amd64, support MacOSX. Compatibilité avec ces systèmes.}
+        xywh {208 132 182 82} labelsize 12 align 145
+      }
+      Fl_Box {} {
+        label Contributeurs
+        xywh {115 13 175 35} box ROUNDED_BOX color 207 labelfont 1 labelsize 16
+      }
+      Fl_Box {} {
+        label {Remerciement spéciaux à:}
+        xywh {67 56 270 25} labelfont 1
+      }
+      Fl_Box {} {
+        label {Gauvain Pocentek}
+        xywh {120 219 165 21} labelfont 1
+      }
+      Fl_Box {} {
+        label {gauvainpocentek@@yahoo.fr}
+        xywh {96 241 213 20} labelfont 1 labelcolor 178
+      }
+      Fl_Box {} {
+        label {Propositions pour rendre le logiciel compatible avec la Debian policy, manpage (français et anglais), ajout de Jargon Informatique dans la distribution Ubuntu.}
+        xywh {86 263 233 80} labelsize 12 align 145
+      }
+    }
+  }
+  Function {~ContribWindow()} {open
+  } {
+    code {delete MainWindow;} {}
+  }
+  Function {show()} {open return_type void
+  } {
+    code {MainWindow->show();
+while(MainWindow->shown()) { Fl::wait(); }} {}
+  }
+} 

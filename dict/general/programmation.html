@@ -1,0 +1,495 @@
+Programmation
+programmation
+ 
+<h1>La programmation par la pratique</h1>
+ 
+<p>Script de support technique Apple (trouvé sur une des
+listes de Macfr)&nbsp;:
+
+<pre><tt>
+Set LeTelephone to "Dring Dring"
+Set LeClient to LeNomDuClientGonflantQuiAppelle
+Set NumeroClient to LeNumeroConfidentielDuClientGonflantQuiAppelle
+
+
+when hearing LeTéléphone
+tell application "Prend Telephone"
+activate
+
+--Les lignes suivantes servent à se présenter une fois le téléphone
+décroché--
+     set NomTechnicien to MonNom
+          if HumeurDuMoment = "Bonne"
+               set TonParole to "VoixChaleureuse"
+               set TechVolume to 3
+               speak "Apple Assistance bonjour" & NomTechnicien & "à
+l"appareil.", with volume = TechVolume and voice = TonParole
+          else
+               set TonParole to "VoixAgressive"
+               set TechVolume to 5
+               speak "Allo, quel est le problème ?", with volume =
+TechVolume and voice = TonParole
+          end if
+
+
+--Les lignes suivantes servent à faire donner le nom du client une fois
+le téléphone décroché--
+
+     speak "Puis-je avoir votre numéro client ?" with volume =
+TechVolume and voice = TonParole
+          
+          if LeClient answers "Désolé, je n'ai pas de numéro de client"
+and HumeurDuMoment = "Bonne"
+               speak "Désolé, il m'est impossible de vous aider car
+vous n'êtes point référencé auprès d'Apple Assistance. Je vous
+transmets au standard afin que nous procédions à votre enregistrement."
+               redirect LeTelephone to LeStandard
+          else
+                 set TonParole to "Kill Kill Destroy"
+                 speak "Mais comment vous avez pu appeler alors ? Votre
+problème, je m'en tape, vous avez qu'à contacter votre revendeur" with
+volume = 7 and voice = TonParole
+                    set LeTelephone to RaccrocheViolemment
+          end if
+end tell
+
+--Si le client donne son numéro de client, il faut l'entrer dans la
+base Clients. Les lignes suivantes déterminent le comportement à avoir
+si le numéro de client ne ressort pas--
+
+     try
+          search NumeroClient in BaseClients
+     on error
+          set TonParole to "PassablementEnervé"
+          set TechVolume to 1     
+          speak "Putain de base à la con !" with volume = TechVolume
+and voice = TonParole
+     end try
+
+-- Il va falloir désormais répondre à la question. La séquence suivante
+enclenche le processus de recherche automatique de solutions aux
+problèmes du client--
+
+tell application "Répondre à la question"
+activate
+     set TonParole to "QuestionSansAucuneAttention"
+     speak "Bien, quel est le problème ?" with volume = current and
+voice = TonParole
+     hear LeClient without listening
+     set TonParole to "Compréhensif"
+     speak "Oui... D'accord... Hmmm... Ok, très bien." with volume 2
+and voice = TonParole but without attention
+
+     set LeProblèmeDuClient to LeClientLuiMême
+     set BlahBlahBlah to CeQueLeClientEssaied'Expliquer
+
+when BlahBlahBlah = 0
+     set TonParole to "Ayons l'air d'y comprendre quelque chose"
+     set TechVolume to 3
+     speak "Je vais essayer de trouver une solution." with volume =
+TechVolume and voice = TonParole
+
+wait idle with timer=120
+     set TonParole to "Victorieux"
+     set TechVolume to 3
+     speak "J'ai peut-être trouvé !" with volume = TechVolume and voice
+= TonParole
+     
+-- Il n'est plus possible de reculer maintenant, il faut trouver une
+réponse. --
+-- Les lignes suivantes servent à guider le "troubleshooting"--
+
+     set LaRéponseBateau to "Reconstruire le Bureau"
+     set TonParole to "Conseil amical"
+     speak "Il va falloir essayer de" & LaRéponseBateau with volume =
+current and voice = TonParole
+     set
+
+     wait RéponseClient
+     if RéponseClient = "Ca marche !"
+          set TonParole to "Super content"
+          set TechVolume to 5
+          speak "Et bien voilà une bonne chose de faite !" with volume
+= TechVolume and voice = TonParole
+     else
+          
+          -- Il faut envisager la situation où la solution nª1 ne
+fonctionne pas --
+
+          think "Et merde..." with stay silent
+          set TonParole to "Songeur"
+          set TechVolume to 4
+          speak "Bon, on va essayer autre chose..." with volume =
+TechVolume and voice = TonParole
+          set LaRéponseBateau to "redémarrer sans extensions"
+          set TonParole to "Conseil péremptoire"
+          speak "Essayez maintenant de" & LaRéponseBateau with volume =
+current and voice = TonParole
+               
+          if RéponseClient = "Enfin, ça marche !!!"
+               think "Pfiou, je l'ai échappé belle" with stay silent
+               set TonParole to "Paternel"
+               set TechVolume to 5
+               speak "Vous avez apparament un conflit d'extensions. je
+ne peux malheureusement rester trop longtemps avec vous pour rechercher
+quelle est l'extension fautive, mais je ne saurais trop vous conseiller
+de vous procurer Conflict Catcher qui sait très bien gérer ce genre de
+problèmes." with volume = TechVolume and voice = TonParole
+               think "Demander une commission sur les ventes à Casady &
+Greene" with stay silent
+          else
+
+          -- Et si la solution nª2 est inefficace, on peut tenter la
+numéro 3 --
+               think "il est vraiment trop blaireau lui..." with stay
+silent
+               set LaRéponseBateau to "Réinstaller le Système"
+               set TonParole to "Conseil péremptoire"
+               speak "Il va falloir essayer de" & LaRéponseBateau with
+volume = current and voice = TonParole
+               wait RéponseClient
+               if RéponseClient = "Enfin, ça marche !"
+                    think "Pfiou, je l'ai échappé belle" with stay
+silent
+                         set TonParole to "Joyeux"
+                    set TechVolume to 5
+                    speak "Vous voyez, on a réussi !!!" with volume =
+TechVolume and voice = TonParole
+               else
+
+                    -- Dans le cas (probable) où la réponse nª3 ne
+donne aucun résultat, il faudra alors tenter la solution ultime --
+                    think "Mais pourquoi j'ai pris ce boulot moi ? Je
+voulais tellement travailler chez MicroSoft..." with stay silent
+                         set HumeurDuMoment = "Massacrante"
+
+                         -- Il arrive parfois que le technicien soit un
+peu énervé. Cette routine tente de --
+                         -- voir si il y a maîtrise de soi de la part
+du technicien ou non. Dans le cas où il --
+                         -- n'y a plus de contrôle, une routine externe
+prend le dessus Merci à PM pour sa--
+                         -- contribution essentielle à la création de
+cette routine --
+                    try
+                              set MaitriseDeSoi to "Contrôle total de
+la situation"
+                    on error
+                         throw CasqueAudio on EcranMac
+                    speak "Fais chier bordel !!!"
+                    end try
+
+                    set LaRéponseBateau to "Formater le disque dur à
+bas niveau avec données à zero et réinstaller la dernière version du
+logiciel Système"
+                    set TonParole to "Décision douloureuse"
+                    speak "Je pense malheureusement qu'il n'y a pas
+d'autre choix que de" & LaRéponseBateau with volume = current and voice
+= TonParole
+                    wait RéponseClient
+                         if RéponseClient = "Ca marche ! Enfin ! Quel
+bordel ça a été !"
+                         think "Pourvu qu'il ne rappelle pas..." with
+stay silent
+                         set TonParole to "Complètement hypocrite"
+                         set TechVolume to 5
+                         speak "Oui, mais vous avez avez été talentueux
+aussi !" with volume = TechVolume and voice = TonParole
+                    else
+                         set TonParole to "Regrets eternels éhontés"
+                         speak "Je crains malheureusement que notre
+support ne soit pas apte à vous dépanner, le problème vient sûrement
+d'un produit MicroSoft. Appelez-les et expliquez-leur le problème, ils
+ont sûrement une solution." with volume = 3 and voice = TonParole
+                          end if
+               end if
+          end if
+     end if
+end tell
+
+tell application "Remerciements"
+activate
+set TonParole to "Remerciements hypocrites"
+speak "Notre centre de support vous remercie d'avoir appelé et vous
+souhaite une excellente journée !" with volume = current and voice =
+TonParole
+set LeTelephone to "Raccroché"
+end tell
+
+tell application GameBoy
+activate
+     play "Super Mario Land"
+end tell
+</tt></pre>
+</p>
+
+<p>Quelques implémentations du programme «&nbsp;Hello,
+world&nbsp;»&nbsp;:
+
+<pre><tt>
+Terminale
+  10 PRINT "HELLO WORLD" 
+  20 END 
+---------------------------------------------------------------- 
+  DUT 1ère année 
+  program HELLO(input, output) 
+  begin 
+  writeln('HELLO WORLD') 
+  end. 
+---------------------------------------------------------------- 
+  DUT 2ème année 
+  (defun HELLO 
+  (print 
+  (cons 'HELLO (list 'WORLD)) 
+  ) 
+  ) 
+---------------------------------------------------------------- 
+  Fraîchement sorti de l'école 
+  #include <stdio.h> 
+  void main(void) 
+  { 
+  char *message[] = {"HELLO ", "WORLD"}; 
+  int i; 
+  for(i = 0; i < 2; ++i) 
+  printf("%s", message[i]); 
+  printf("\n"); 
+  } 
+---------------------------------------------------------------- 
+  Professionnel très expérimenté 
+  #include <iostream.h> 
+  #include <string.h> 
+  class string 
+  { 
+  private: 
+  int size; 
+  char *ptr; 
+  public: 
+  string() : size(0), ptr(new char('\0')) {} 
+  string(const string &s) : size(s.size) 
+  { 
+  ptr = new char[size + 1]; 
+  strcpy(ptr, s.ptr); 
+  } 
+  ~string() 
+  { 
+  delete [] ptr; 
+  } 
+  friend ostream &operator <<(ostream &, const string &); 
+  string &operator=(const char *); 
+  }; 
+  ostream &operator<<(ostream &stream, const string &s) 
+  { 
+  return(stream << s.ptr); 
+  } 
+  string &string::operator=(const char *chrs) 
+  { 
+  if (this != &chrs) 
+  { 
+  delete [] ptr; 
+  size = strlen(chrs); 
+  ptr = new char[size + 1]; 
+  strcpy(ptr, chrs); 
+  } 
+  return(*this); 
+  } 
+ 
+  int main() 
+  { 
+  string str; 
+  str = "HELLO WORLD"; 
+  cout << str << endl; 
+  return(0); 
+  } 
+---------------------------------------------------------------- 
+  Professionnel vraiment très très expérimenté 
+  [ 
+  uuid(2573F8F4-CFEE-101A-9A9F-00AA00342820) 
+  ] 
+  library LHello 
+  { 
+  // bring in the master library 
+  importlib("actimp.tlb"); 
+  importlib("actexp.tlb"); 
+ 
+  // bring in my interfaces 
+  #include "pshlo.idl" 
+  [ 
+  uuid(2573F8F5-CFEE-101A-9A9F-00AA00342820) 
+  ] 
+  cotype THello 
+  { 
+  interface IHello; 
+  interface IPersistFile; 
+  }; 
+  }; 
+ 
+  // needed typelibs 
+  importlib("actimp.tlb"); 
+  importlib("actexp.tlb"); 
+  importlib("thlo.tlb"); 
+ 
+  [ 
+  uuid(2573F891-CFEE-101A-9A9F-00AA00342820), 
+  aggregatable 
+  ] 
+  coclass CHello 
+  { 
+  cotype THello; 
+  }; 
+  }; 
+  #include "ipfix.hxx" 
+  extern HANDLE hEvent; 
+  class CHello : public CHelloBase 
+  { 
+  public: 
+  IPFIX(CLSID_CHello); 
+  CHello(IUnknown *pUnk); 
+  ~CHello(); 
+  HRESULT __stdcall PrintSz(LPWSTR pwszString); 
+  private: 
+  static int cObjRef; 
+  }; 
+  #include "thlo.h" 
+  #include "pshlo.h" 
+  #include "shlo.hxx" 
+  #include "mycls.hxx" 
+  int CHello::cObjRef = 0; 
+  CHello::CHello(IUnknown *pUnk) : CHelloBase(pUnk) 
+  { 
+  cObjRef++; 
+  return; 
+  } 
+  HRESULT __stdcall CHello::PrintSz(LPWSTR pwszString) 
+ 
+  { 
+  printf("%ws\n", pwszString); 
+  return(ResultFromScode(S_OK)); 
+  } 
+  CHello::~CHello(void) 
+  { 
+  // when the object count goes to zero, stop the server 
+  cObjRef--; 
+  if( cObjRef == 0 ) 
+  PulseEvent(hEvent); 
+  return; 
+  } 
+  #include "pshlo.h" 
+  #include "shlo.hxx" 
+  #include "mycls.hxx" 
+  HANDLE hEvent; 
+  int _cdecl main( 
+  int argc, 
+  char * argv[] 
+  ) 
+  { 
+  ULONG ulRef; 
+  DWORD dwRegistration; 
+  CHelloCF *pCF = new CHelloCF(); 
+  hEvent = CreateEvent(NULL, FALSE, FALSE, NULL); 
+  // Initialize the OLE libraries 
+  CoInitializeEx(NULL, COINIT_MULTITHREADED); 
+  CoRegisterClassObject(CLSID_CHello, pCF, CLSCTX_LOCAL_SERVER, 
+  REGCLS_MULTIPLEUSE, &dwRegistration); 
+  // wait on an event to stop 
+  WaitForSingleObject(hEvent, INFINITE); 
+  // revoke and release the class object 
+  CoRevokeClassObject(dwRegistration); 
+  ulRef = pCF->Release(); 
+  // Tell OLE we are going away. 
+  CoUninitialize(); 
+  return(0); 
+  } 
+  #include "pshlo.h" 
+  #include "shlo.hxx" 
+  #include "clsid.h" 
+  int _cdecl main( 
+  int argc, 
+  char * argv[] 
+  ) 
+  { 
+  HRESULT hRslt; 
+  IHello *pHello; 
+  ULONG ulCnt; 
+  IMoniker * pmk; 
+  WCHAR wcsT[_MAX_PATH]; 
+  WCHAR wcsPath[2 * _MAX_PATH]; 
+  // get object path 
+  wcsPath[0] = '\0'; 
+  wcsT[0] = '\0'; 
+  if( argc > 1) { 
+  mbstowcs(wcsPath, argv[1], strlen(argv[1]) + 1); 
+  wcsupr(wcsPath); 
+  } 
+  else { 
+  fprintf(stderr, "Object path must be specified\n"); 
+  return(1); 
+  } 
+
+---------------------------------------------------------------- 
+  Administrateur Système 
+  #include <stdio.h> 
+  main() 
+  { 
+  char *tmp; 
+  int i=0; 
+  /* on y va bourin */ 
+  tmp=(char *)malloc(1024*sizeof(char)); 
+  while (tmp[i]="HELLO WOLRD"[i++]); 
+  /* Ooopps y'a une infusion ! */ 
+  i=(int)tmp[8]; 
+  tmp[8]=tmp[9]; 
+  tmp[9]=(char)i; 
+  printf("%s\n",tmp); 
+  } 
+ 
+---------------------------------------------------------------- 
+  Apprenti Hacker 
+  #!/usr/local/bin/perl 
+  $msg="HELLO, WORLD.\n"; 
+  if ($#ARGV >= 0) { 
+  while(defined($arg=shift(@ARGV))) { 
+  soutfilename = $arg; 
+  open(FILE, ">" . $outfilename) || die "Can't write 
+  $arg:$!\n"; 
+  print (FILE $msg); 
+  close(FILE) || die "Can't close $arg: $!\n"; 
+  } 
+  } else { 
+  print ($msg); 
+  } 
+  1; 
+---------------------------------------------------------------- 
+  Hacker très expérimenté 
+  % cc -o a.out ~/src/misc/bv/bv.c 
+  % a.out 
+
+---------------------------------------------------------------- 
+  Gourou des Hackers 
+  % cat 
+  HELLO, WORLD. 
+  ^D 
+---------------------------------------------------------------- 
+  Directeur 
+  mail -s "HELLO, WORLD." bob@b12 
+  Henri, pourrais-tu m'écrire un programme qui écrit "HELLO, WORLD." 
+  À l'écran? 
+  J'en ai besoin pour demain. 
+  ^D 
+---------------------------------------------------------------- 
+  Directeur senior 
+  % zmail Jean 
+  J'ai besoin d'un programme "HELLO, WORLD." Pour cette après-midi. 
+
+--------------------------------------------------------------- 
+  Président Directeur Général 
+  % letter 
+  letter: Command not found. 
+  % mail 
+  To: ^X ^F ^C 
+  % help mail 
+  help: Command not found. 
+  % bordel! 
+  !: Event unrecognized 
+  % logout 
+</tt></pre>
+</p>

@@ -1,0 +1,21 @@
+Compiler Jargon Informatique sous Windows.
+---------------------------------------------
+
+Vous aurez besoin du compilateur Mingw32. 
+
+Vous devez installer msys et mingw32 afin d'avoir un environnement UNIX 
+minimal.
+
+Vous devez aussi compiler et installer la la bibliothèque Fltk.
+Vous pouvez la télécharger depuis son site officiel: http://www.fltk.org/
+
+==============================================
+Compiler Jargon Informatique
+==============================================
+Pour compiler jargon informatique: 
+
+$ cd <repertoire_du_code_source>
+$ ./configure && make
+
+Vous aurez à la fin l'exécutable: jargoninformatique.exe
+

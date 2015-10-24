@@ -1,2 +1,2 @@
-# jargoninformatique
-# jargoninformatique
+# Dictionnaire informatique / Tech terms dictionary
+
