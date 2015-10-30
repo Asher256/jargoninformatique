@@ -27,7 +27,8 @@ static_fltk=no
 static_flu=yes # par defaut statique (car non repandue)
 static_gcc=no
 
-CFLAGS="$CFLAGS -Wall"
+#CFLAGS="$CFLAGS -Wall"
+CFLAGS="$CFLAGS -Wall -Wno-write-strings -Wno-format-security -Wno-unused-but-set-variable"
 
 #les répertoires importants
 ! [ -d "obj" ] && mkdir obj

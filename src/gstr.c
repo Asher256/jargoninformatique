@@ -316,7 +316,7 @@ char *gs_join(GS_LIST *list, const char *separator)
  * 'delim' dans 'chaine'
  ************************************************************/
 //OK
-GS_LIST *gs_split_ex(const char *string, const char *delim, char *(*_strstr)(const char *,const char *), size_t delim_len)
+GS_LIST *gs_split_ex(const char *string, const char *delim, const char *(*_strstr)(const char *,const char *), size_t delim_len)
 {
 	static const char *suivant, *precedent, *cp /*const p*/;
        	char *p;

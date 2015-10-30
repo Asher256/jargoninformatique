@@ -1,6 +1,6 @@
 #ifndef __CONFIGURE__H
 #define __CONFIGURE__H
-#define INDEX_TYPE int
+#define INDEX_TYPE long
 #ifndef LINUX
 #define LINUX /* nom du system */
 #endif
