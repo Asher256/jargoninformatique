@@ -31,8 +31,8 @@ Jargon Informatique est un logiciel qui vous permettra de naviguer aisément
 (et hors ligne) et d'une manière très rapide dans un dictionnaire informatique
 très fourni (plus de 10000 mots!).  
   
-Quand on est dans un site internet, entrain de lire un document ou encore
-entrain de discutter en IRC, on est souvent confronté aux mots du Jargon
+Quand on est dans un site internet, en train de lire un document ou encore
+en train de discutter en IRC, on est souvent confronté aux mots du Jargon
 Informatique (par exemple troll, blog, vimisme, linux, TCP/IP, POP3, Geek,
 etc.).  
   
@@ -109,7 +109,7 @@ Pour deux raisons:
 
 À partir de la version 1.3.4, certains raccourcis clavier ont été ajoutés.  
   
-Quand vous êtes entrain d'écrire un mot dans la recherche vous pouvez taper la
+Quand vous êtes en train d'écrire un mot dans la recherche vous pouvez taper la
 touche Flèche de bas pour sélectionner le premier élément de la liste.  
   
 Les touches haut et bas vous permettent de naviguer dans la liste de mots.  
