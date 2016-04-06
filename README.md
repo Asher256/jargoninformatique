@@ -15,7 +15,6 @@
   * Pourquoi avoir fait ce logiciel?
   * Est-ce possible de naviguer plus rapidement avec le clavier?
   * Quels sont les outils utilisés pour la création du logiciel?
----  
 
 ## Comment compiler Jargon Informatique?  
 Sous Linux:  
