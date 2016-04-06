@@ -1,7 +1,7 @@
 Compiler Jargon Informatique sous GNU/Linux
 --------------------------------------------
 NOTE: Ce texte est écrit au format UTF-8 (pour les accents)
-Si vous avez des questions concernant ce document: contact@asher256.com
+Si vous avez des questions concernant ce document: asher256@gmail.com
 
 =============================================
 Les dépendances
@@ -15,6 +15,9 @@ deux librairies supplémentaires à X11:
           vous pouvez toujours le compiler et l'installer depuis la source.
           Son site officiel: http://www.fltk.org/
 
+Sous Ubuntu, vous pouvez installer les dépendences avec:
+	apt-get install libfltk1.3-dev libxpm-dev
+
 =============================================
 Commencer la compilation
 =============================================
@@ -22,9 +25,9 @@ Une fois la librairie Fltk installées, on va pouvoir compiler
 Jargon Informatique.
 
 Vous devez aller là ou il y a Jargon Informatique, par exemple
-si vous avez la source dans /home/asher256/JargonInformatique-1.3.6:
+si vous avez la source dans /home/asher256/JargonInformatique:
 
-$ cd /home/asher256/JargonInformatique-1.3.6
+$ cd /home/asher256/JargonInformatique
 
 Après vous générez le Makefile et les fichiers de configuration:
 

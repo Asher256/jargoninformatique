@@ -3,7 +3,7 @@
  * informatique.
  *
  * Copyrigh (c) Asher256 2004
- * <contact@asher256.com>
+ * <asher256@gmail.com>
  * Site: http://jargon.tuxfamily.org/
  ******************************************************
  * Format de fichier du dictonnaire:

@@ -3,7 +3,7 @@
 // windows (les anti slash) et les unix (avec des SLASH).
 //
 // Auteur: Asher256
-// Email:  contact@asher256.com
+// Email:  asher256@gmail.com
 //===================================================================
 //-------------
 // Licence:

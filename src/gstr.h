@@ -2,7 +2,7 @@
  * gestion de string
  *
  * Auteur: Asher256
- * Email:  contact@asher256.com
+ * Email:  asher256@gmail.com
  ***********************************/
 
 #ifndef __GSTR_H

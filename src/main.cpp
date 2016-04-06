@@ -6,7 +6,7 @@
 // Jargon Informatique.
 //
 // Copyright (c) Asher256 
-// Email:  contact@asher256.com
+// Email:  asher256@gmail.com
 // Site:   http://jargon.tuxfamily.org/
 //
 //==================================================================
@@ -689,7 +689,7 @@ void exporter_html(const char *fichier)
 	char *mot = dict.entry[index].word;//prends le mot
 	
 	//mettre le contenu
-	fprintf(handle,"<!-- Exportation faite avec le logiciel Jargon Informatique version %s, par Asher256 2005 -->\n",VERSION);
+	fprintf(handle,"<!-- Exportation faite avec le logiciel Jargon Informatique version %s, par Asher256 -->\n",VERSION);
 	fprintf(handle,"<!-- Pour plus d'informations, le site du logiciel: http://jargon.tuxfamily.org/ -->\n\n");
 	fprintf(handle,"<html>\n<head>\n\t<title>Explication du mot %s</title>\n",mot);
 	
@@ -1346,8 +1346,8 @@ add("- Migration du site officiel de http://jargon.new.fr à");
 add("  http://jargon.tuxfamily.org");
 add("- Modification de tous les liens (dans le logiciel et les");
 add("  readme) vers http://jargon.tuxfamily.org et tous les");
-add("  emails d'contact@asher256.com vers");
-add("  contact@asher256.com");
+add("  emails d'asher256@gmail.com vers");
+add("  asher256@gmail.com");
 add("");
 
 add(F "Version 1.3.2");

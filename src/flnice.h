@@ -3,7 +3,7 @@
 // d'informations
 //
 // Copyright (c) Asher256
-// Email:  contact@asher256.com
+// Email:  asher256@gmail.com
 // Site:   http://jargon.tuxfamily.org/
 //
 //==================================================================

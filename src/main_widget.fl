@@ -242,7 +242,7 @@ http://www.linux-france.org/prj/jargonf}
         xywh {11 66 235 15} labelfont 5 labelsize 12 labelcolor 215 align 21
       }
       Fl_Box label_email {
-        label {Email:  contact@asher256.com}
+        label {Email:  asher256@gmail.com}
         xywh {10 86 235 15} labelfont 5 labelsize 12 labelcolor 206 align 21
       }
       Fl_Box label_url {

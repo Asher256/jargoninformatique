@@ -3,7 +3,7 @@
  * en C.
  *
  * Auteur: Asher256
- * Email:  contact@asher256.com
+ * Email:  asher256@gmail.com
  ************************************************************
  * NOTE: les commentaires de ce code source sont
  *       écrit au format utf8.

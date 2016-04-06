@@ -5,7 +5,7 @@ Version: 1.3.6
 Release: 1
 License: GPL
 Group: Documentation
-Packager: Asher256 <contact@asher256.com>
+Packager: Asher256 <asher256@gmail.com>
 Source: http://jargon.tuxfamily.org/%{name}-%{version}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-buildroot
 URL: http://jargon.tuxfamily.org/
@@ -48,7 +48,7 @@ rm -fr $RPM_BUILD_ROOT
 %changelog
 * Wed Aug 24 2005 Remi Collet <remi.collet@univ-reims.fr> 1.3.4-2
 - .spec update for more compatibility
-* Wed Aug 24 2005 Asher256 <contact@asher256.com> 1.3.4-1
+* Wed Aug 24 2005 Asher256 <asher256@gmail.com> 1.3.4-1
 - First version of the .spec
 - Version 1.3.4
 

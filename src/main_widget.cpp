@@ -373,7 +373,7 @@ chier LISEZ-MOI.htm et COPYING.txt pour plus d\'informations.  ");
       o->labelcolor((Fl_Color)215);
       o->align(FL_ALIGN_TOP_LEFT|FL_ALIGN_INSIDE);
     }
-    { Fl_Box* o = label_email = new Fl_Box(10, 86, 235, 15, "Email:  contact@asher256.com");
+    { Fl_Box* o = label_email = new Fl_Box(10, 86, 235, 15, "Email:  asher256@gmail.com");
       o->labelfont(5);
       o->labelsize(12);
       o->labelcolor((Fl_Color)206);

@@ -4,7 +4,7 @@
 // de la librairie.
 //
 // Auteur: Asher256
-// Email:  contact@asher256.com
+// Email:  asher256@gmail.com
 //============================================
 // Fichier source distribué en GPL v2
 //============================================
