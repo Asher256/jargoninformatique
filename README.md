@@ -3,6 +3,7 @@
 
 **Auteur:** Asher256  <asher256@gmail.com>
 **Site Officiel:** http://jargon.asher256.com/
+**Github:** https://github.com/Asher256/jargoninformatique
   
 Ceci est normalement le premier fichier à lire si vous avez téléchargé et/ou
 installé le logiciel Jargon Informatique.
