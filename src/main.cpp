@@ -7,7 +7,7 @@
 //
 // Copyright (c) Asher256 
 // Email:  asher256@gmail.com
-// Site:   http://jargon.tuxfamily.org/
+// Site:   http://jargon.asher256.com/
 //
 //==================================================================
 // LICENCE:
@@ -690,7 +690,7 @@ void exporter_html(const char *fichier)
 	
 	//mettre le contenu
 	fprintf(handle,"<!-- Exportation faite avec le logiciel Jargon Informatique version %s, par Asher256 -->\n",VERSION);
-	fprintf(handle,"<!-- Pour plus d'informations, le site du logiciel: http://jargon.tuxfamily.org/ -->\n\n");
+	fprintf(handle,"<!-- Pour plus d'informations, le site du logiciel: http://jargon.asher256.com/ -->\n\n");
 	fprintf(handle,"<html>\n<head>\n\t<title>Explication du mot %s</title>\n",mot);
 	
 	//maintenant, il va mettre le style de la page
@@ -747,7 +747,7 @@ void exporter_html(const char *fichier)
 
 	//et mets la fin aussi
 	fprintf(handle,"<tr><td>%s</td></tr>\n",new_description);
-	fprintf(handle,"<tr>\n\t<td align=\"center\"><font size=\"-1\">Exporté avec <a href=\"http://jargon.tuxfamily.org/\" href=\"_blank\">Jargon Informatique</a> version %s</font></td></tr>\n",VERSION);
+	fprintf(handle,"<tr>\n\t<td align=\"center\"><font size=\"-1\">Exporté avec <a href=\"http://jargon.asher256.com/\" href=\"_blank\">Jargon Informatique</a> version %s</font></td></tr>\n",VERSION);
 	fprintf(handle,"</table>\n</body></html>");
 
 	//et enfin, fermeture
@@ -1343,9 +1343,9 @@ add("- Correction d'un bug mineur dans le parser. Les lien après");
 add("  les images ne s'affichaient comme étant du texte normal. Comme");
 add("  dans le mot 'OpenBSD'");
 add("- Migration du site officiel de http://jargon.new.fr à");
-add("  http://jargon.tuxfamily.org");
+add("  http://jargon.asher256.com");
 add("- Modification de tous les liens (dans le logiciel et les");
-add("  readme) vers http://jargon.tuxfamily.org et tous les");
+add("  readme) vers http://jargon.asher256.com/ et tous les");
 add("  emails d'asher256@gmail.com vers");
 add("  asher256@gmail.com");
 add("");

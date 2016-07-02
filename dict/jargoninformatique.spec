@@ -6,9 +6,9 @@ Release: 1
 License: GPL
 Group: Documentation
 Packager: Asher256 <asher256@gmail.com>
-Source: http://jargon.tuxfamily.org/%{name}-%{version}.tar.gz
+Source: http://jargon.asher256.com/%{name}-%{version}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-buildroot
-URL: http://jargon.tuxfamily.org/
+URL: http://jargon.asher256.com/
 #BuildRequires: xorg-x11-devel fontconfig-devel freetype-devel fltk-devel
 #Requires: fltk libjpeg libpng zlib 
 

@@ -246,7 +246,7 @@ http://www.linux-france.org/prj/jargonf}
         xywh {10 86 235 15} labelfont 5 labelsize 12 labelcolor 206 align 21
       }
       Fl_Box label_url {
-        label {Url:    http://jargon.tuxfamily.org/}
+        label {Url:    http://jargon.asher256.com/}
         xywh {11 106 235 15} labelfont 5 labelsize 12 labelcolor 175 align 21
       }
       Fl_Button show_news {

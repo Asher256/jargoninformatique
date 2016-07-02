@@ -15,7 +15,7 @@
 //
 // Auteur: Asher256 2004
 // asher256@gmail.com
-// http://jargon.tuxfamily.org/
+// http://jargon.asher256.com/
 //
 // Quelques defines:
 // =================

@@ -379,7 +379,7 @@ chier LISEZ-MOI.htm et COPYING.txt pour plus d\'informations.  ");
       o->labelcolor((Fl_Color)206);
       o->align(FL_ALIGN_TOP_LEFT|FL_ALIGN_INSIDE);
     }
-    { Fl_Box* o = label_url = new Fl_Box(11, 106, 235, 15, "Url:    http://jargon.tuxfamily.org/");
+    { Fl_Box* o = label_url = new Fl_Box(11, 106, 235, 15, "Url:    http://jargon.asher256.com/");
       o->labelfont(5);
       o->labelsize(12);
       o->labelcolor((Fl_Color)175);

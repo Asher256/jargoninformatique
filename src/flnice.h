@@ -4,7 +4,7 @@
 //
 // Copyright (c) Asher256
 // Email:  asher256@gmail.com
-// Site:   http://jargon.tuxfamily.org/
+// Site:   http://jargon.asher256.com/
 //
 //==================================================================
 // LICENCE:

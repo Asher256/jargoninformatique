@@ -4,7 +4,7 @@
  *
  * Copyrigh (c) Asher256 2004
  * <asher256@gmail.com>
- * Site: http://jargon.tuxfamily.org/
+ * Site: http://jargon.asher256.com/
  ******************************************************
  * Format de fichier du dictonnaire:
  * ---------------------------------
